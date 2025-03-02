@@ -1,0 +1,84 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /gulimall
+spring:
+  main:
+    # 关闭 spring logo
+    banner-mode: off
+  datasource:
+    # 数据源配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.113.130:3306/gulimall_oms?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  devtools:
+    livereload:
+      port: 35732
+    restart:
+      exclude: static/**,public/**,templates/**
+  security:
+    user:
+      name: root   # 自定义用户名
+      password: root  # 自定义密码
+#  data:
+#    redis:
+#      database: 0
+#      host: localhost
+#      port: 6379
+#      password:
+#      # 连接超时
+#      connect-timeout: 5s
+#      # 读超时
+#      timeout: 5s
+#      lettuce:
+#        pool:
+#          min-idle: 0
+#          max-idle: 8
+#          max-active: 8
+#          max-wait: -1ms
+#      jedis:
+#        pool:
+#          enabled: true
+#          max-active: 8
+#          max-idle: 8
+#          max-wait: -1ms
+#          min-idle: 0
+mybatis-plus:
+  # 给需要在 mapper.xml 使用的类起别名，不配置的话，需要写全类名
+  type-aliases-package: com.fzy.**.bean,com.fzy.**.domain,com.fzy.**.entity
+  # mapper.xml 的存储位置
+  mapper-locations: classpath*:mapper/**/*.xml
+  global-config:
+    # 关闭 mybatis plus logo
+    banner: false
+    db-config:
+      # 主键生成规则
+      # auto: 数据库自增
+      # assign_id: 使用雪花算法生成主键（要求主键为bigint类型），默认情况
+      # assign_uuid: 使用 UUID 生成主键
+      id-type: auto
+      # 全局设置逻辑删除字段和表示删除/未删除的值
+      logic-delete-field: status
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+  configuration:
+    # 设置日志实现
+    # StdOutImpl 会在控制台输出 sql 语句
+    # Log4j2Impl 会在 log4j2.xml 配置的日志文件中输出 sql 语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 下划线转驼峰
+    # 这个配置解决的是 select 语句查询结构字段名和实体类属性名不一致的问题
+    # 这个配置默认为 true
+    map-underscore-to-camel-case: true
+#mybatis:
+#  type-aliases-package: org.myspringframework.springbootmybatisplus001.bean
+#decorator:
+#  datasource:
+#    p6spy:
+#      logging: slf4j   # 日志输出方式 slf4j, stdout, file
+#      log-file: spy.log
+#      log-format: executionTime:%(executionTime) | connection:%(connectionId) | sql:%(sql)
+logging:
+  level:
+    org.springframework.security: trace

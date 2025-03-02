@@ -1,0 +1,89 @@
+spring:
+  main:
+    # 关闭 spring logo
+    banner-mode: off
+  datasource:
+    # 数据源配置
+#    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.113.130:3306/gulimall_pms?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  devtools:
+    livereload:
+      enabled: true
+      port: 35729
+    restart:
+      exclude: static/**,public/**,templates/**
+  security:
+    user:
+      name: root
+      password: root
+mybatis-plus:
+  # 给需要在 mapper.xml 使用的类起别名，不配置的话，需要写全类名
+  type-aliases-package: com.fzy.**.bean,com.fzy.**.domain,com.fzy.**.entity
+  mapper-locations: classpath*:mapper/**/*.xml
+  global-config:
+    # 关闭 mybatis plus logo
+    banner: false
+    db-config:
+      # 主键生成规则
+      # auto: 数据库自增
+      # assign_id: 使用雪花算法生成主键（要求主键为bigint类型），默认情况
+      # assign_uuid: 使用 UUID 生成主键
+      id-type: auto
+      # 全局设置逻辑删除字段和表示删除/未删除的值
+      logic-delete-field: status
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+  configuration:
+    # 设置日志实现（控制台输出）
+    # StdOutImpl 会在控制台输出 sql 语句
+    # Log4j2Impl 会在 log4j2.xml 配置的日志文件中输出 sql 语句
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 下划线转驼峰
+    # 这个配置解决的是 select 语句查询结构字段名和实体类属性名不一致的问题
+    # 这个配置默认为 true
+    map-underscore-to-camel-case: true
+#mybatis:
+#  type-aliases-package: org.myspringframework.springbootmybatisplus001.bean
+server:
+  port: 8081
+  servlet:
+    context-path: /gulimall
+#decorator:
+#  datasource:
+#    p6spy:
+#      logging: sysout   # 日志输出方式 slf4j, sysout, file, custom
+#      log-file: ./log/spy.log
+#      log-format: executionTime:%(executionTime) | connection:%(connectionId) | sql:%(sql)
+#      multiline: false  # 多行输出
+logging:
+  pattern:
+    # 控制台日志输出格式
+    console: "%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) : %cyan(%msg%n)"
+    # 默认格式：
+    # console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n"
+    # 日志文件输出格式
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS}  %-5level [%thread] %logger{36} : %msg %n"
+    # 格式化时间日期
+    # date-format: yyyy-MM-dd HH:mm:ss.SSS
+    # 格式化日志级别
+    # level: "%5p"
+  level:
+    root: INFO   # 默认就是 Info 级。除了 trace 外其他级别的日志都会被输出。
+    # 还能给不同包下的代码分配不同的日志级别
+    org.springframework.security: debug
+    # 模糊匹配问题：springboot2.7 仅支持精确匹配; springboot3+（jdk17+） 支持 * 单层匹配
+    com.fzy.gulimall.product.mapper: debug    # sql 打印
+    # 解除注释会启用文件日志存储
+#  file:
+#    name: log/spring.log  # 指定存储的位置和日志文件的名称，从模块根目录起始
+#    #path: ./log/    # 日志文件名默认为 spring.log 会被前者覆盖
+#  logback:
+#    rollingpolicy:    # 日志文件滚动策略，实现日志文件的自动分割，归档，删除等功能
+#      max-file-size: 100MB    # 日志文件达到多大时进行归档
+#      total-size-cap: 1024MB    # 所有的归档日志文件总共达到多大时进行删除，默认是0B表示不删除
+#      max-history: 30         # 归档日志文件最多保留几天
+#      clean-history-on-start: false     # 启动项目时是否要清理归档日志文件
+#      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz     # 归档日志文件名的格式

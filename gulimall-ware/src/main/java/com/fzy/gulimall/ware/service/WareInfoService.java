@@ -1,0 +1,16 @@
+package com.fzy.gulimall.ware.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.fzy.gulimall.ware.bean.WareInfo;
+
+/**
+ * <p>
+ * 仓库信息 服务类
+ * </p>
+ *
+ * @author fzy
+ * @since 2025-03-01
+ */
+public interface WareInfoService extends IService<WareInfo> {
+
+}
